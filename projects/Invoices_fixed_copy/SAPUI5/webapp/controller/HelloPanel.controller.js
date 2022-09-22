@@ -1,7 +1,7 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/m/MessageToast"
-
+    "sap/m/MessageToast",
+    "sap/base/Log"
 ],
     /**
      * 
@@ -11,13 +11,23 @@ sap.ui.define([
      * @param {typeof sap.ui.core.Fragment} Fragment
      *                 
      */
-    function (Controller, MessageToast) {
+    function (Controller, MessageToast, Log) {
         "use strict";
         
         return Controller.extend("clara.SAPUI5.controller.HelloPanel", {
 
             onInit: function () {
  
+            },
+
+            onBeforeRendering: function () {
+                window.message = 'Log message - onBeforeRendering';
+                Log.info(window.message);
+                Log.error(window.message);
+            },
+
+            onAfterRendering: function () {
+               // debugger;
             },
 
             onShowHello: function () {

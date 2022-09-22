@@ -2,13 +2,13 @@ sap.ui.define([
     "sap/ui/core/UIComponent",
     "clara/SAPUI5/model/Models",
     "sap/ui/model/resource/ResourceModel",
-    "./controller/HelloDialog"  //carga el HelloDialog.js y lo almacena en this._helloDialog y llama a su función "open" por ej
-
+    "./controller/HelloDialog",  //carga el HelloDialog.js y lo almacena en this._helloDialog y llama a su función "open" por ej
+    "sap/ui/Device"
 ], 
 /**
  * @param {typeof sap.ui.core.UIComponent} UIComponent
  */
- function(UIComponent, Models, ResourceModel, HelloDialog){
+ function(UIComponent, Models, ResourceModel, HelloDialog, Device){
 
     return UIComponent.extend("clara.SAPUI5.Component", {
 
@@ -38,6 +38,9 @@ sap.ui.define([
 
             //create the views based on the url/hash
             this.getRouter().initialize();
+
+            //set the device model
+            this.setModel(Models.createDeviceModel(),"device");
         },
 
         exit: function () {
@@ -50,6 +53,14 @@ sap.ui.define([
 //          
         openHelloDialog: function () {
             this._helloDialog.open();
+        },
+        getContentDensityClass: function () {
+           if (!Device.support.touch) {
+               this._sContectDensityClass = "sapUiSizeCompact";               
+           } else {
+            this._sContectDensityClass = "sapUiSizeCozy"
+           }
+           return this._sContectDensityClass;
         }
     });
 });
